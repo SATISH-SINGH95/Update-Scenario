@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -58,4 +59,12 @@ public class StudentController {
         StudentDto dto = studentService.findOne(id);
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+    @GetMapping("/students")
+    public ResponseEntity<List<StudentDto>> findAll(){
+        List<StudentDto> dto = studentService.findAll();
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
+
 }

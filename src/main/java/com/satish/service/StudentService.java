@@ -100,5 +100,14 @@ public class StudentService {
         return studentRepository.findById(id).map(studentMapper::toDto).orElseThrow(() -> new RuntimeException("Student not found"));
     }
 
+    public List<StudentDto> findAll() {
+        log.debug("Request to find all Student");
+        List<Student> students = studentRepository.findAll();
+        if(students.isEmpty() || students == null){
+            throw new RuntimeException("Students are not found");
+        }
+        return students.stream().map(studentMapper::toDto).toList();
+    }
+
 
 }
