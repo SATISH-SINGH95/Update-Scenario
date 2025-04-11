@@ -1,6 +1,8 @@
 package com.satish.controller;
 
 import com.satish.dto.StudentDto;
+import com.satish.exception.BadRequestException;
+import com.satish.exception.EntityNotFoundException;
 import com.satish.repository.StudentRepository;
 import com.satish.service.StudentService;
 import org.springframework.http.HttpStatus;
@@ -26,7 +28,7 @@ public class StudentController {
     @PostMapping("/students")
     public ResponseEntity<?> createStudent(@RequestBody StudentDto studentDto){
         if(studentDto.getId() != null){
-            throw new RuntimeException("Student already created");
+            throw new BadRequestException("Student already created");
         }
         StudentDto save = studentService.save(studentDto);
         return new ResponseEntity<>(save, HttpStatus.CREATED);
@@ -35,13 +37,13 @@ public class StudentController {
     @PutMapping("/students/{id}")
     public ResponseEntity<?> updateStudent(@PathVariable("id") Long id, @RequestBody StudentDto studentDto){
         if(studentDto.getId() == null){
-            throw new RuntimeException("Invalid Id");
+            throw new BadRequestException("Invalid Id");
         }
         if(!Objects.equals(id, studentDto.getId())){
-            throw new RuntimeException("Invalid Id");
+            throw new BadRequestException("Invalid Id");
         }
         if(!studentRepository.existsById(id)){
-            throw new RuntimeException("Student not found");
+            throw new EntityNotFoundException("Student not found");
         }
 
         StudentDto dto = studentService.updateStudent(studentDto);
