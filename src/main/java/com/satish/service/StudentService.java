@@ -4,6 +4,7 @@ import com.satish.dto.AddressDto;
 import com.satish.dto.StudentDto;
 import com.satish.entity.Address;
 import com.satish.entity.Student;
+import com.satish.exception.EntityNotFoundException;
 import com.satish.mapper.AddressMapper;
 import com.satish.mapper.StudentMapper;
 import com.satish.repository.AddressRepository;
@@ -11,12 +12,12 @@ import com.satish.repository.StudentRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -97,14 +98,14 @@ public class StudentService {
     }
 
     public StudentDto findOne(Long id){
-        return studentRepository.findById(id).map(studentMapper::toDto).orElseThrow(() -> new RuntimeException("Student not found"));
+        return studentRepository.findById(id).map(studentMapper::toDto).orElseThrow(() -> new EntityNotFoundException("Student not found"));
     }
 
     public List<StudentDto> findAll() {
         log.debug("Request to find all Student");
         List<Student> students = studentRepository.findAll();
         if(students.isEmpty() || students == null){
-            throw new RuntimeException("Students are not found");
+            throw new EntityNotFoundException("Students are not found");
         }
         return students.stream().map(studentMapper::toDto).toList();
     }
