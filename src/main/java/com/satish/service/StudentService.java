@@ -54,6 +54,12 @@ public class StudentService {
         return studentMapper.toDto(student);
     }
 
+    /**
+     * Add addresses to student from given studentDTO.
+     *
+     * @param studentDto StudentDTO to read addresses from
+     * @param student    Student to add addresses to
+     */
     private void addAddress(StudentDto studentDto, Student student){
         if(studentDto.getAddresses() != null && !studentDto.getAddresses().isEmpty()){
             for(AddressDto addressDto : studentDto.getAddresses()){
