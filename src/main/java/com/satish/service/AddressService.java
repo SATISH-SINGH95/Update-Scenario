@@ -13,10 +13,20 @@ public class AddressService {
         this.addressRepository = addressRepository;
     }
 
+    /**
+     * Deletes the address with the given id.
+     *
+     * @param id The id of the address to delete
+     */
     public void delete(Long id){
         addressRepository.deleteById(id);
     }
 
+    /**
+     * Removes the given address from the database.
+     *
+     * @param address The address to be removed
+     */
     public void removeAddress(Address address){
         delete(address.getId());
     }

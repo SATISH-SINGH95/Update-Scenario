@@ -68,6 +68,12 @@ public class StudentService {
         }
     }
 
+    /**
+     * Update student and addresses from given studentDTO.
+     *
+     * @param studentDto StudentDTO to read student and addresses from
+     * @return Updated studentDTO
+     */
     public StudentDto updateStudent(StudentDto studentDto){
         log.debug("Request to update Student : {}", studentDto);
 
@@ -93,6 +99,11 @@ public class StudentService {
         return studentMapper.toDto(student);
     }
 
+    /**
+     * Delete student by id.
+     *
+     * @param id The id of the student to delete
+     */
     @Transactional
     public void delete(Long id){
         log.debug("Request to delete Student : {}", id);
@@ -103,6 +114,12 @@ public class StudentService {
         });
     }
 
+    /**
+     * Finds a student by given id.
+     *
+     * @param id The id of the student to find
+     * @return The student with the given id, or throws an {@link EntityNotFoundException} if no student with the given id exists
+     */
     public StudentDto findOne(Long id){
         return studentRepository.findById(id).map(studentMapper::toDto).orElseThrow(() -> new EntityNotFoundException("Student not found"));
     }
